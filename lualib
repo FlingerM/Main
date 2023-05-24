@@ -1449,3 +1449,5 @@ lib.createWindow = function(name, title, draggable)
 
 	return WindowLib
 end
+
+return lib
