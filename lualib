@@ -1334,6 +1334,13 @@ lib.createWindow = function(name, title, draggable)
 	WindowLib.deleteWindow = function()
 		MainGui:Destroy()
 	end
+	
+	lib.main = function()
+	    window = lib.createWindow("Aqua", "Aqua Library", true) 
+	    tab = window.createTab("Main")
+	    
+	    return window, tab
+	end
 
 	local function TabHandle()
 		local newscript = Instance.new('LocalScript', TabList)
