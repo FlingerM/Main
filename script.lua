@@ -1471,6 +1471,7 @@ local d = false
 local notify = function(label, main)
 window.notification(main, label)
 end
+		notify("Hello!", "Log")
 local m = game.Players.LocalPlayer.Name
 local p = false
 local l = false
@@ -1513,6 +1514,7 @@ m = nil
 p = false
 b = 75
 l = false
+z = false
 wh = false
     window.deleteWindow("HOKJHa's Gui") 
 end)
@@ -1551,6 +1553,13 @@ if workspace[m].Humanoid.Health ~= 0 then
     elseif lb ~= 0 then
         workspace[m].Humanoid.WalkSpeed = lb
     end
+    if z then
+        for v, a in pairs(workspace:GetChildren()) do
+            if a.Name == "Lava" then
+	a:Destroy()
+		end
+        end
+    end
     workspace.Camera.FieldOfView = b
 end
 end
@@ -1559,6 +1568,10 @@ section1.createToggle("Farm orbits", false, function(value)
 end)
 logsection.createToggle("Delete popups", false, function(value)
 	p = value
+	pcall(g)
+end)
+logsection.createToggle("Delete lava", false, function(value)
+	z = value
 	pcall(g)
 end)
 logsection.createToggle("No walk limit", false, function(value)
