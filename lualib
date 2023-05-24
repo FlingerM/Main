@@ -39,6 +39,32 @@ lib.createWindow = function(name, title, draggable)
 	local UICorner_2 = Instance.new("UICorner")
 	local TabHolder = Instance.new("Frame")
 	local MainFrame = Instance.new("Frame")
+	local Button = Instance.new("TextButton")			
+	local ButtonUICorner = Instance.new("UICorner")
+	local ButtonIcon = Instance.new("ImageLabel")
+
+	Button.Name = "Remove GUI"
+	Button.Parent = Section
+	Button.BackgroundColor3 = Color3.fromRGB(245, 96, 96)
+	Button.BorderSizePixel = 0
+	Button.Size = UDim2.new(0, 349, 0, 29)
+	Button.Font = Enum.Font.Gotham
+	Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Button.TextSize = 14.300
+	Button.Text = text
+	Button.MouseButton1Down:Connect() MainWindow:Destroy() end)
+
+	ButtonUICorner.CornerRadius = UDim.new(0, 5)
+	ButtonUICorner.Parent = Button
+				
+	ButtonIcon.Name = "ButtonIcon"
+	ButtonIcon.Parent = Button
+	ButtonIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	ButtonIcon.BackgroundTransparency = 1.000
+	ButtonIcon.BorderSizePixel = 0
+	ButtonIcon.Position = UDim2.new(0.927924275, 0, 0.137931034, 0)
+	ButtonIcon.Size = UDim2.new(0, 19, 0, 20)
+	ButtonIcon.Image = "rbxassetid://7072719587"
 
 	local tabs = {}
 
