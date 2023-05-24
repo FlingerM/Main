@@ -1538,22 +1538,6 @@ if s:FindFirstChildOfClass("Model") or s:FindFirstChildOfClass("Part") or s:IsA(
     end)  
 end
 end
-section1.createToggle("Farm orbits", false, function(value)
-	e = value
-end)
-logsection.createToggle("Delete popups", false, function(value)
-	p = value
-end)
-logsection.createToggle("No walk limit", false, function(value)
-	l = value
-end)
-logsection.createToggle("Duration", false, function(value)
-	d = value
-end)
-logsection.createSlider("FOV", {defualt = 75, max = 120, min = 35}, function(value)
-	b = value
-end)
-local lb = 0
 local g = function()
 if workspace[m].Humanoid.Health ~= 0 then
     if p and game.Players[m].PlayerGui.AdvertisementsGui then
@@ -1570,8 +1554,27 @@ if workspace[m].Humanoid.Health ~= 0 then
     workspace.Camera.FieldOfView = b
 end
 end
+section1.createToggle("Farm orbits", false, function(value)
+	e = value
+end)
+logsection.createToggle("Delete popups", false, function(value)
+	p = value
+	pcall(g)
+end)
+logsection.createToggle("No walk limit", false, function(value)
+	l = value
+	pcall(g)
+end)
+logsection.createToggle("Duration", false, function(value)
+	d = value
+	pcall(g)
+end)
+logsection.createSlider("FOV", {defualt = 75, max = 120, min = 35}, function(value)
+	b = value
+	pcall(g)
+end)
+local lb = 0
 while wait() do
-   pcall(g)
     if e and workspace[m].Humanoid.Health ~= 0 then
         for t, s in pairs(Workspace:GetDescendants()) do
             if s:IsA("Part") then
