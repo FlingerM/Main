@@ -1,0 +1,28 @@
+local lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/TheoTheEpic/AquaLib/main/AquaLib.lua'))()
+local window = lib.createWindow("HOKJHa's GUI", "HOKJHa's GUI", true) 
+local maintab = window.createTab("Main")
+local teleports = maintab.createSection("Farm", false)
+local FarmValue = false
+local Name =  game.Players.LocalPlayer.Name
+local Win = false
+local position = Vector3.new(0, 0, 0)
+local Toggle = function()
+    if FarmValue then
+        local m = math.round((workspace.Scene.Start["Decoration"].Ground.Position - workspace[Name].HumanoidRootPart.Position).magnitude)
+        if m <= 100 then
+            position = workspace[Name].HumanoidRootPart.Position
+            workspace[Name]:MoveTo(workspace.Scene.Game.EndTouch.Position)
+            workspace[Name]:MoveTo(Position)
+        end
+    end
+end
+teleports.createToggle("Win farm", false, function(value)
+	FarmValue = value
+end)
+maintab.createButton("Remove GUI", function()
+    FarmValue = false
+    window.deleteWindow("HOKJHa's GUI")
+end)
+while wait() do
+    pcall(Toggle)
+end
