@@ -1,4 +1,5 @@
 local ver = "1.1.0"
+local changelog = game:HttpGet("https://raw.githubusercontent.com/TheoTheEpic/AquaLib/main/Changelog.txt") or "UNABLE TO GET CHANGELOG"
 
 local lib = {}
 
@@ -38,6 +39,32 @@ lib.createWindow = function(name, title, draggable)
 	local UICorner_2 = Instance.new("UICorner")
 	local TabHolder = Instance.new("Frame")
 	local MainFrame = Instance.new("Frame")
+	local Button = Instance.new("TextButton")			
+	local ButtonUICorner = Instance.new("UICorner")
+	local ButtonIcon = Instance.new("ImageLabel")
+
+	Button.Name = "Remove GUI"
+	Button.Parent = Section
+	Button.BackgroundColor3 = Color3.fromRGB(245, 96, 96)
+	Button.BorderSizePixel = 0
+	Button.Size = UDim2.new(0, 349, 0, 29)
+	Button.Font = Enum.Font.Gotham
+	Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Button.TextSize = 14.300
+	Button.Text = text
+	Button.MouseButton1Down:Connect() MainWindow:Destroy() end)
+
+	ButtonUICorner.CornerRadius = UDim.new(0, 5)
+	ButtonUICorner.Parent = Button
+				
+	ButtonIcon.Name = "ButtonIcon"
+	ButtonIcon.Parent = Button
+	ButtonIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	ButtonIcon.BackgroundTransparency = 1.000
+	ButtonIcon.BorderSizePixel = 0
+	ButtonIcon.Position = UDim2.new(0.927924275, 0, 0.137931034, 0)
+	ButtonIcon.Size = UDim2.new(0, 19, 0, 20)
+	ButtonIcon.Image = "rbxassetid://7072719587"
 
 	local tabs = {}
 
@@ -116,7 +143,7 @@ lib.createWindow = function(name, title, draggable)
 	MainFrame.BackgroundTransparency = 1
 	MainFrame.BorderSizePixel = 0
 	MainFrame.Position = UDim2.new(0.353, 0, 0.349, 0)
-	MainFrame.Size = UDim2.new(0, 563, 0, 20)
+	MainFrame.Size = UDim2.new(0, 563, 0, 323)
 
 	SideBar.Name = "SideBar"
 	SideBar.Parent = MainFrame
@@ -266,7 +293,7 @@ lib.createWindow = function(name, title, draggable)
 		Message.Font = Enum.Font.Gotham
 		Message.Text = text
 		Message.TextColor3 = Color3.fromRGB(245, 247, 244)
-		Message.TextSize = 18
+		Message.TextSize = 12.000
 		Message.TextWrapped = true
 		Message.TextXAlignment = Enum.TextXAlignment.Left
 		Message.TextYAlignment = Enum.TextYAlignment.Top
@@ -410,62 +437,7 @@ lib.createWindow = function(name, title, draggable)
 			TextIcon.Size = UDim2.new(0, 21, 0, 20)
 			TextIcon.Image = "rbxassetid://7072716382"
 		end
-		TabLib.createcustomButton = function(text, color, textsize, callback)
-			local Button = Instance.new("TextButton")			
-			local ButtonUICorner = Instance.new("UICorner")
-			local ButtonIcon = Instance.new("ImageLabel")
-
-			Button.Name = text
-			Button.Parent = TabMain
-			Button.BackgroundColor3 = if color ~= nil then color else Color3.fromRGB(50, 44, 53)
-			Button.BorderSizePixel = 0
-			Button.Size = UDim2.new(0, 382, 0, 29)
-			Button.Font = Enum.Font.Gotham
-			Button.TextColor3 = Color3.fromRGB(255, 255, 255)
-			Button.TextSize = textsize
-			Button.Text = text
-			Button.MouseButton1Down:Connect(callback or function() print("No callback specified") end)
-
-			ButtonUICorner.CornerRadius = UDim.new(0, 5)
-			ButtonUICorner.Parent = Button
-			
-			ButtonIcon.Name = "ButtonIcon"
-			ButtonIcon.Parent = Button
-			ButtonIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-			ButtonIcon.BackgroundTransparency = 1.000
-			ButtonIcon.BorderSizePixel = 0
-			ButtonIcon.Position = UDim2.new(0.927924275, 0, 0.137931034, 0)
-			ButtonIcon.Size = UDim2.new(0, 19, 0, 20)
-			ButtonIcon.Image = "rbxassetid://7072719587"
-		end
-
-		TabLib.createText = function(text)
-			local Text = Instance.new("TextLabel")
-			local TextUICorner = Instance.new("UICorner")
-
-			Text.Name = text
-			Text.Parent = TabMain
-			Text.BackgroundColor3 = Color3.fromRGB(50, 44, 53)
-			Text.BorderSizePixel = 0
-			Text.Size = UDim2.new(0, 382, 0, 29)
-			Text.Font = Enum.Font.Gotham
-			Text.Text = text
-			Text.TextColor3 = Color3.fromRGB(255, 255, 255)
-			Text.TextSize = 14.000
-
-			TextUICorner.CornerRadius = UDim.new(0, 5)
-			TextUICorner.Parent = Text
-			
-			local TextIcon = Instance.new("ImageLabel")
-			TextIcon.Name = "TextIcon"
-			TextIcon.Parent = Text
-			TextIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-			TextIcon.BackgroundTransparency = 1.000
-			TextIcon.BorderSizePixel = 0
-			TextIcon.Position = UDim2.new(0.924277246, 0, 0.137931034, 0)
-			TextIcon.Size = UDim2.new(0, 21, 0, 20)
-			TextIcon.Image = "rbxassetid://7072716382"
-		end
+		
 		TabLib.createSection = function(text, isopen)
 			
 			local SectionLib = {}
@@ -579,34 +551,6 @@ lib.createWindow = function(name, title, draggable)
 				Text.Text = text
 				Text.TextColor3 = Color3.fromRGB(255, 255, 255)
 				Text.TextSize = 14.000
-
-				TextUICorner.CornerRadius = UDim.new(0, 5)
-				TextUICorner.Parent = Text
-				
-				local TextIcon = Instance.new("ImageLabel")
-				TextIcon.Name = "TextIcon"
-				TextIcon.Parent = Text
-				TextIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-				TextIcon.BackgroundTransparency = 1.000
-				TextIcon.BorderSizePixel = 0
-				TextIcon.Position = UDim2.new(0.924277246, 0, 0.137931034, 0)
-				TextIcon.Size = UDim2.new(0, 21, 0, 20)
-				TextIcon.Image = "rbxassetid://7072716382"
-			end
-
-            SectionLib.createcustomText = function(text, color, textsize)
-				local Text = Instance.new("TextLabel")
-				local TextUICorner = Instance.new("UICorner")
-
-				Text.Name = text
-				Text.Parent = Section
-				Text.BackgroundColor3 = if color ~= nil then color else Color3.fromRGB(50, 44, 53)
-				Text.BorderSizePixel = 0
-				Text.Size = UDim2.new(0, 352, 0, 29)
-				Text.Font = Enum.Font.Gotham
-				Text.Text = text
-				Text.TextColor3 = Color3.fromRGB(255, 255, 255)
-				Text.TextSize = textsize
 
 				TextUICorner.CornerRadius = UDim.new(0, 5)
 				TextUICorner.Parent = Text
@@ -1456,161 +1400,4 @@ lib.createWindow = function(name, title, draggable)
 	return WindowLib
 end
 
---local lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/TheoTheEpic/AquaLib/main/AquaLib.lua'))()
---loadstring(game:HttpGet("https://cdn.wearedevs.net/scripts/Dex%20Explorer.txt"))()
- 
-local window = lib.createWindow("HOKJHa's Gui", "HOKJHa's Gui", true) -- lib.createWindow(title, name, draggable)
-local tab1 = window.createTab("Main")
-local tab2 = window.createTab("ReplicatedStorage")
-local section1 = tab1.createSection("Main", false)
-local rooms = tab1.createSection("Structures", false)
-local logsection = tab1.createSection("Settings", false)
-local Main = tab2.createSection("Server-sided", false)
-local e = false
-local d = false
-local notify = function(label, main)
-window.notification(main, label)
-end
-		notify("Hello!", "Log")
-local m = game.Players.LocalPlayer.Name
-local p = false
-local l = false
-local b = 75
-local wh = false
-local clientsideds = tab2.createSection("Client-sided", false)
-clientsideds.createButton("Give all tools", function()
-for i, v in pairs(game.ReplicatedStorage.Shared.Prefabs.Tools:GetChildren()) do
-    v:Clone().Parent = game.Players[m].Backpack
-end
-end)
-Main.createButton("Revive", function()
-game.Players[m]["__comm__"].RE.Respawn:FireServer()
-end)
-Main.createButton("Respawn [idk wha it]", function()
-game.Players[m]["__comm__"].RE.OnPlayerRevived:FireServer()
-end)
-section1.createButton("Check Orbits", function()
-	if workspace.Balls.Orbs:FindFirstChildOfClass("Part") then
-
-        notify("Succes founded any orbits!", "Log")
-
-        else
-
-        notify("There is no any orbit!", "Log")
-    end
-end)
-section1.createButton("Once give badges", function()
-	for v, i in pairs(workspace:GetChildren()) do
-        if i.Name == "BadgeGiver" then
-            wait(0.2)
-            workspace[m]:MoveTo(i.Position)
-        end    
-    end    
-end)
-tab1.createcustomButton("Remove", Color3.fromRGB(226, 74, 74), 14, function() 
-e = false
-d = false
-m = nil
-p = false
-b = 75
-l = false
-z = false
-wh = false
-    window.deleteWindow("HOKJHa's Gui") 
-end)
-rooms.createcustomText("That all it's a pairs of folder!", Color3.fromRGB(189, 189, 189), 14)  -- tab.createText(text)
-for v, s in pairs(workspace.Structure:GetChildren()) do
-if s:FindFirstChildOfClass("Model") or s:FindFirstChildOfClass("Part") or s:IsA("Part") then
-    for c, p in pairs(s:GetDescendants()) do
-        if not p:IsA("Part") then
-           s:Destroy()
-        end
-    end
-    rooms.createButton(s.Name.." ["..v.."]", function() 
-    if s:IsA("Part") then
-                 workspace[m]:MoveTo(s.Position)
-        else
-        for c, p in pairs(s:GetDescendants()) do
-        if p:IsA("Part") then
-            print(p)
-            workspace[m]:MoveTo(p.Position)
-        end
-    end
-    end  
-    end)  
-end
-end
-local g = function()
-if workspace[m].Humanoid.Health ~= 0 then
-    if p and game.Players[m].PlayerGui.AdvertisementsGui then
-        for v, a in pairs(game.Players[m].PlayerGui.AdvertisementsGui:GetChildren()) do
-            a:Destroy()
-        end
-    end
-    if l and workspace[m].Humanoid.Health ~= 0 then
-        lb = workspace[m].Humanoid.WalkSpeed
-        workspace[m].Humanoid.WalkSpeed = 32
-    elseif lb ~= 0 then
-        workspace[m].Humanoid.WalkSpeed = lb
-    end
-    if z then
-        for v, a in pairs(workspace:GetChildren()) do
-            if a.Name == "Lava" then
-	a:Destroy()
-		end
-        end
-    end
-    workspace.Camera.FieldOfView = b
-end
-end
-section1.createToggle("Farm orbits", false, function(value)
-	e = value
-end)
-logsection.createToggle("Delete popups", false, function(value)
-	p = value
-	pcall(g)
-end)
-logsection.createToggle("Delete lava", false, function(value)
-	z = value
-	pcall(g)
-end)
-logsection.createToggle("No walk limit", false, function(value)
-	l = value
-	pcall(g)
-end)
-logsection.createToggle("Duration", false, function(value)
-	d = value
-	pcall(g)
-end)
-logsection.createSlider("FOV", {defualt = 75, max = 120, min = 35}, function(value)
-	b = value
-	pcall(g)
-end)
-local lb = 0
-while wait() do
-    if e and workspace[m].Humanoid.Health ~= 0 then
-        for t, s in pairs(Workspace:GetDescendants()) do
-            if s:IsA("Part") then
-                s.CanCollide = false
-            end
-        end
-        for v, ball in pairs(workspace.Balls.Orbs:GetDescendants()) do
-            --local posbefore = workspace.HOKJHa.HumanoidRootPart.Position
-            if ball:IsA("Part") then
-                if d then
-                    wait(1)
-                    else
-                    wait(0.3)
-                end
-                workspace[m]:MoveTo(ball.Position + Vector3.new(0, -2, 0))
-            end
-        end
-        for t, s in pairs(Workspace:GetDescendants()) do
-            if s:IsA("Part") then
-                s.CanCollide = true
-            end
-        end
-        --workspace.HOKJHa:MoveTo(posbefore)
-    end
-end
-
+return lib
