@@ -23,7 +23,7 @@ local function Tween(GuiObject, Dictionary)
 	return TweenBase
 end
 
-lib.createWindow = function(name, title, draggable)
+lib.premain = function(name, title, draggable)
 	local MainGui = Instance.new("ScreenGui")
 	local ContainerFrame = Instance.new("Frame")
 	local SideBar = Instance.new("Frame")
@@ -38,6 +38,64 @@ lib.createWindow = function(name, title, draggable)
 	local UICorner_2 = Instance.new("UICorner")
 	local TabHolder = Instance.new("Frame")
 	local MainFrame = Instance.new("Frame")
+	local Button = Instance.new("TextButton")			
+	local ButtonUICorner = Instance.new("UICorner")
+	local ButtonIcon = Instance.new("ImageLabel")
+	local TabLib = {}
+	table.insert("default_tab", "Main")
+
+	local TabButton = Instance.new("TextButton")
+	TabButton.Name = "default_tab:main_holder"
+	TabButton.Parent = TabList
+	TabButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TabButton.BackgroundTransparency = 1.000
+	TabButton.BorderSizePixel = 0
+	TabButton.Size = UDim2.new(0, 148, 0, 25)
+	TabButton.Font = Enum.Font.Gotham
+	TabButton.Text = "Raze"
+	TabButton.TextColor3 = Color3.fromRGB(245, 247, 244)
+	TabButton.TextSize = 14.000
+
+	local TabMain = Instance.new("ScrollingFrame")
+	TabMain.Name = "default_tab:main"
+	TabMain.Parent = TabHolder
+	TabMain.Active = true
+	TabMain.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TabMain.BackgroundTransparency = 1.000
+	TabMain.BorderSizePixel = 0
+	TabMain.Position = UDim2.new(0.0176322423, 0, 0.0185185187, 0)
+	TabMain.Size = UDim2.new(0, 382, 0, 311)
+	TabMain.CanvasSize = UDim2.new(0, 0, 0, 0)
+	TabMain.ScrollBarThickness = 0
+	TabMain.AutomaticCanvasSize = Enum.AutomaticSize.Y
+
+	local TabLayout = Instance.new("UIListLayout")
+	TabLayout.Parent = TabMain
+	TabLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	TabLayout.Padding = UDim.new(0, 5)
+
+	Button.Name = "r"
+	Button.Parent = TabMain
+	Button.BackgroundColor3 = Color3.fromRGB(50, 44, 53)
+	Button.BorderSizePixel = 0
+	Button.Size = UDim2.new(0, 382, 0, 29)
+	Button.Font = Enum.Font.Gotham
+	Button.TextColor3 = Color3.fromRGB(254, 96, 96)
+	Button.TextSize = 14.000
+	Button.Text = "Remove"
+	Button.MouseButton1Down:Connect(function()  end)
+
+	ButtonUICorner.CornerRadius = UDim.new(0, 5)
+	ButtonUICorner.Parent = Button
+			
+	ButtonIcon.Name = "ButtonIcon"
+	ButtonIcon.Parent = Button
+	ButtonIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	ButtonIcon.BackgroundTransparency = 1.000
+	ButtonIcon.BorderSizePixel = 0
+	ButtonIcon.Position = UDim2.new(0.927924275, 0, 0.137931034, 0)
+	ButtonIcon.Size = UDim2.new(0, 19, 0, 20)
+	ButtonIcon.Image = "rbxassetid://7072719587"
 
 	local tabs = {}
 
@@ -97,7 +155,7 @@ lib.createWindow = function(name, title, draggable)
 		tweenservice:Create(v, info, {TextTransparency = 0}):Play()
 	end
 
-	local defualt_tab = false
+	local defualt_tab = true
 
 	MainGui.Name = name or "noname"
 	MainGui.Parent = game.CoreGui
@@ -1455,146 +1513,3 @@ lib.createWindow = function(name, title, draggable)
 
 	return WindowLib
 end
-
---local lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/TheoTheEpic/AquaLib/main/AquaLib.lua'))()
---loadstring(game:HttpGet("https://cdn.wearedevs.net/scripts/Dex%20Explorer.txt"))()
- 
-local window = lib.createWindow("HOKJHa's Gui", "HOKJHa's Gui", true) -- lib.createWindow(title, name, draggable)
-local tab1 = window.createTab("Main")
-local tab2 = window.createTab("ReplicatedStorage")
-local section1 = tab1.createSection("Main", false)
-local rooms = tab1.createSection("Structures", false)
-local logsection = tab1.createSection("Settings", false)
-local Main = tab2.createSection("Server-sided", false)
-local e = false
-local d = false
-local notify = function(label, main)
-window.notification(main, label)
-end
-local m = game.Players.LocalPlayer.Name
-local p = false
-local l = false
-local b = 75
-local wh = false
-local clientsideds = tab2.createSection("Client-sided", false)
-clientsideds.createButton("Give all tools", function()
-for i, v in pairs(game.ReplicatedStorage.Shared.Prefabs.Tools:GetChildren()) do
-    v:Clone().Parent = game.Players[m].Backpack
-end
-end)
-Main.createButton("Revive", function()
-game.Players[m]["__comm__"].RE.Respawn:FireServer()
-end)
-Main.createButton("Respawn [idk wha it]", function()
-game.Players[m]["__comm__"].RE.OnPlayerRevived:FireServer()
-end)
-section1.createButton("Check Orbits", function()
-	if workspace.Balls.Orbs:FindFirstChildOfClass("Part") then
-
-        notify("Succes founded any orbits!", "Log")
-
-        else
-
-        notify("There is no any orbit!", "Log")
-    end
-end)
-section1.createButton("Once give badges", function()
-	for v, i in pairs(workspace:GetChildren()) do
-        if i.Name == "BadgeGiver" then
-            wait(0.2)
-            workspace[m]:MoveTo(i.Position)
-        end    
-    end    
-end)
-tab1.createcustomButton("Remove", Color3.fromRGB(226, 74, 74), 14, function() 
-e = false
-d = false
-m = nil
-p = false
-b = 75
-l = false
-wh = false
-    window.deleteWindow("HOKJHa's Gui") 
-end)
-rooms.createcustomText("That all it's a pairs of folder!", Color3.fromRGB(189, 189, 189), 14)  -- tab.createText(text)
-for v, s in pairs(workspace.Structure:GetChildren()) do
-if s:FindFirstChildOfClass("Model") or s:FindFirstChildOfClass("Part") or s:IsA("Part") then
-    for c, p in pairs(s:GetDescendants()) do
-        if not p:IsA("Part") then
-           s:Destroy()
-        end
-    end
-    rooms.createButton(s.Name.." ["..v.."]", function() 
-    if s:IsA("Part") then
-                 workspace[m]:MoveTo(s.Position)
-        else
-        for c, p in pairs(s:GetDescendants()) do
-        if p:IsA("Part") then
-            print(p)
-            workspace[m]:MoveTo(p.Position)
-        end
-    end
-    end  
-    end)  
-end
-end
-section1.createToggle("Farm orbits", false, function(value)
-	e = value
-end)
-logsection.createToggle("Delete popups", false, function(value)
-	p = value
-end)
-logsection.createToggle("No walk limit", false, function(value)
-	l = value
-end)
-logsection.createToggle("Duration", false, function(value)
-	d = value
-end)
-logsection.createSlider("FOV", {defualt = 75, max = 120, min = 35}, function(value)
-	b = value
-end)
-local lb = 0
-local g = function()
-if workspace[m].Humanoid.Health ~= 0 then
-    if p and game.Players[m].PlayerGui.AdvertisementsGui then
-        for v, a in pairs(game.Players[m].PlayerGui.AdvertisementsGui:GetChildren()) do
-            a:Destroy()
-        end
-    end
-    if l and workspace[m].Humanoid.Health ~= 0 then
-        lb = workspace[m].Humanoid.WalkSpeed
-        workspace[m].Humanoid.WalkSpeed = 32
-    elseif lb ~= 0 then
-        workspace[m].Humanoid.WalkSpeed = lb
-    end
-    workspace.Camera.FieldOfView = b
-end
-end
-while wait() do
-   pcall(g)
-    if e and workspace[m].Humanoid.Health ~= 0 then
-        for t, s in pairs(Workspace:GetDescendants()) do
-            if s:IsA("Part") then
-                s.CanCollide = false
-            end
-        end
-        for v, ball in pairs(workspace.Balls.Orbs:GetDescendants()) do
-            --local posbefore = workspace.HOKJHa.HumanoidRootPart.Position
-            if ball:IsA("Part") then
-                if d then
-                    wait(1)
-                    else
-                    wait(0.3)
-                end
-                workspace[m]:MoveTo(ball.Position + Vector3.new(0, -2, 0))
-            end
-        end
-        for t, s in pairs(Workspace:GetDescendants()) do
-            if s:IsA("Part") then
-                s.CanCollide = true
-            end
-        end
-        --workspace.HOKJHa:MoveTo(posbefore)
-    end
-end
-
