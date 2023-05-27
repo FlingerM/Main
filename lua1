@@ -72,7 +72,7 @@ while wait() do
     if p[0] and character.Humanoid.Health ~= 0 and head == true then
         LookAtNearbyPlayer()
 	else
-	window.notification("Log", "Error", 18 , nil)
+	print(head, p[0])
     end
     game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, true)
 end
