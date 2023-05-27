@@ -55,7 +55,7 @@ if head then
 end
 end
 end
-window.notification("Hello!", "Welcome that so dangerous but if u used it im reccomend u be in invisible using mind control!", 18 ,"rbxassetid://3926305904", Vector2.new(884, 964), Vector2.new(36, 36), nil, nil)
+window.notification("Hello!", "Welcome that so dangerous but if u used it im reccomend u be in invisible using mind control!", 18 , nil)
 mainsection.createToggle("Chaos", false, function(v)
     p[0]=v 
     print(p[0])
