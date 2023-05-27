@@ -69,8 +69,10 @@ mainsection.createDropdown("Teleport", {"Guillotine", "Cage1", "Cage2", "Cage3",
     p[1]=v 
 end)
 while wait() do
-    if p[0] and character.Humanoid.Health ~= 0 then
+    if p[0] and character.Humanoid.Health ~= 0 and head == true then
         LookAtNearbyPlayer()
+	else
+	window.notification("Log", "Error", 18 , nil)
     end
     game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, true)
 end
