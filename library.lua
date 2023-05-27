@@ -196,7 +196,7 @@ lib.createWindow = function(name, title, draggable)
 	TabHolder.Position = UDim2.new(0.293, 0, -0.002, 0)
 	TabHolder.Size = UDim2.new(0, 397, 0, 324)
 
-	WindowLib.notification = function(title, text, size, iconid, p1, p2, color1, color2)
+	WindowLib.notification = function(title, text, size)
 		local Popup = Instance.new("Frame")
 		local UICorner_7 = Instance.new("UICorner")
 		local Main_2 = Instance.new("Frame")
@@ -206,20 +206,6 @@ lib.createWindow = function(name, title, draggable)
 		local Message = Instance.new("TextLabel")
 		local Close = Instance.new("TextButton")
 		local UICorner_9 = Instance.new("UICorner")
-		local ImageLabel = Instance.new("ImageLabel")
-		
-		if iconid ~= nil then
-			ImageLabel.Parent = MainFrame
-        
-			ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		ImageLabel.BackgroundTransparency = 1.000
-		ImageLabel.Size = UDim2.new(0, 50, 0, 50)
-		ImageLabel.Image = iconid
-		ImageLabel.ImageRectOffset = p1
-		ImageLabel.ImageRectSize = p2
-		ImageLabel.ZIndex = 12
-		ImageLabel.Position = UDim2.new(0, 0, -0.00615463902, 0)
-		end
 		
 		Popup.Name = "Notification"
 		Popup.Parent = MainFrame
