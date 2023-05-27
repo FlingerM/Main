@@ -1,4 +1,5 @@
 local ver = "1.1.0"
+local changelog = game:HttpGet("https://raw.githubusercontent.com/TheoTheEpic/AquaLib/main/Changelog.txt") or "UNABLE TO GET CHANGELOG"
 
 local lib = {}
 
@@ -23,7 +24,7 @@ local function Tween(GuiObject, Dictionary)
 	return TweenBase
 end
 
-lib.premain = function(name, title, draggable)
+lib.createWindow = function(name, title, draggable)
 	local MainGui = Instance.new("ScreenGui")
 	local ContainerFrame = Instance.new("Frame")
 	local SideBar = Instance.new("Frame")
@@ -38,64 +39,6 @@ lib.premain = function(name, title, draggable)
 	local UICorner_2 = Instance.new("UICorner")
 	local TabHolder = Instance.new("Frame")
 	local MainFrame = Instance.new("Frame")
-	local Button = Instance.new("TextButton")			
-	local ButtonUICorner = Instance.new("UICorner")
-	local ButtonIcon = Instance.new("ImageLabel")
-	local TabLib = {}
-	table.insert("default_tab", "Main")
-
-	local TabButton = Instance.new("TextButton")
-	TabButton.Name = "default_tab:main_holder"
-	TabButton.Parent = TabList
-	TabButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	TabButton.BackgroundTransparency = 1.000
-	TabButton.BorderSizePixel = 0
-	TabButton.Size = UDim2.new(0, 148, 0, 25)
-	TabButton.Font = Enum.Font.Gotham
-	TabButton.Text = "Raze"
-	TabButton.TextColor3 = Color3.fromRGB(245, 247, 244)
-	TabButton.TextSize = 14.000
-
-	local TabMain = Instance.new("ScrollingFrame")
-	TabMain.Name = "default_tab:main"
-	TabMain.Parent = TabHolder
-	TabMain.Active = true
-	TabMain.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	TabMain.BackgroundTransparency = 1.000
-	TabMain.BorderSizePixel = 0
-	TabMain.Position = UDim2.new(0.0176322423, 0, 0.0185185187, 0)
-	TabMain.Size = UDim2.new(0, 382, 0, 311)
-	TabMain.CanvasSize = UDim2.new(0, 0, 0, 0)
-	TabMain.ScrollBarThickness = 0
-	TabMain.AutomaticCanvasSize = Enum.AutomaticSize.Y
-
-	local TabLayout = Instance.new("UIListLayout")
-	TabLayout.Parent = TabMain
-	TabLayout.SortOrder = Enum.SortOrder.LayoutOrder
-	TabLayout.Padding = UDim.new(0, 5)
-
-	Button.Name = "r"
-	Button.Parent = TabMain
-	Button.BackgroundColor3 = Color3.fromRGB(50, 44, 53)
-	Button.BorderSizePixel = 0
-	Button.Size = UDim2.new(0, 382, 0, 29)
-	Button.Font = Enum.Font.Gotham
-	Button.TextColor3 = Color3.fromRGB(254, 96, 96)
-	Button.TextSize = 14.000
-	Button.Text = "Remove"
-	Button.MouseButton1Down:Connect(function()  end)
-
-	ButtonUICorner.CornerRadius = UDim.new(0, 5)
-	ButtonUICorner.Parent = Button
-			
-	ButtonIcon.Name = "ButtonIcon"
-	ButtonIcon.Parent = Button
-	ButtonIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	ButtonIcon.BackgroundTransparency = 1.000
-	ButtonIcon.BorderSizePixel = 0
-	ButtonIcon.Position = UDim2.new(0.927924275, 0, 0.137931034, 0)
-	ButtonIcon.Size = UDim2.new(0, 19, 0, 20)
-	ButtonIcon.Image = "rbxassetid://7072719587"
 
 	local tabs = {}
 
@@ -155,7 +98,7 @@ lib.premain = function(name, title, draggable)
 		tweenservice:Create(v, info, {TextTransparency = 0}):Play()
 	end
 
-	local defualt_tab = true
+	local defualt_tab = false
 
 	MainGui.Name = name or "noname"
 	MainGui.Parent = game.CoreGui
@@ -174,7 +117,7 @@ lib.premain = function(name, title, draggable)
 	MainFrame.BackgroundTransparency = 1
 	MainFrame.BorderSizePixel = 0
 	MainFrame.Position = UDim2.new(0.353, 0, 0.349, 0)
-	MainFrame.Size = UDim2.new(0, 563, 0, 20)
+	MainFrame.Size = UDim2.new(0, 563, 0, 323)
 
 	SideBar.Name = "SideBar"
 	SideBar.Parent = MainFrame
@@ -253,7 +196,7 @@ lib.premain = function(name, title, draggable)
 	TabHolder.Position = UDim2.new(0.293, 0, -0.002, 0)
 	TabHolder.Size = UDim2.new(0, 397, 0, 324)
 
-	WindowLib.notification = function(title, text)
+	WindowLib.notification = function(title, text, size, iconid, p1, p2, color1, color2)
 		local Popup = Instance.new("Frame")
 		local UICorner_7 = Instance.new("UICorner")
 		local Main_2 = Instance.new("Frame")
@@ -263,7 +206,21 @@ lib.premain = function(name, title, draggable)
 		local Message = Instance.new("TextLabel")
 		local Close = Instance.new("TextButton")
 		local UICorner_9 = Instance.new("UICorner")
-
+		local ImageLabel = Instance.new("ImageLabel")
+		
+		if iconid ~= nil then
+			ImageLabel.Parent = MainFrame
+        
+			ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		ImageLabel.BackgroundTransparency = 1.000
+		ImageLabel.Size = UDim2.new(0, 50, 0, 50)
+		ImageLabel.Image = iconid
+		ImageLabel.ImageRectOffset = p1
+		ImageLabel.ImageRectSize = p2
+		ImageLabel.ZIndex = 12
+		ImageLabel.Position = UDim2.new(0, 0, -0.00615463902, 0)
+		end
+		
 		Popup.Name = "Notification"
 		Popup.Parent = MainFrame
 		Popup.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -295,8 +252,8 @@ lib.premain = function(name, title, draggable)
 		Title_2.Size = UDim2.new(0, 334, 0, 33)
 		Title_2.Font = Enum.Font.GothamBold
 		Title_2.Text = title
-		Title_2.TextColor3 = Color3.fromRGB(156, 159, 161)
-		Title_2.TextSize = 14.000
+		Title_2.TextColor3 = color1 or Color3.fromRGB(156, 159, 161)
+		Title_2.TextSize = 14
 		Title_2.TextTransparency = 1
 		Title_2.ZIndex = 11
 
@@ -323,8 +280,8 @@ lib.premain = function(name, title, draggable)
 		Message.Size = UDim2.new(0, 294, 0, 119)
 		Message.Font = Enum.Font.Gotham
 		Message.Text = text
-		Message.TextColor3 = Color3.fromRGB(245, 247, 244)
-		Message.TextSize = 18
+		Message.TextColor3 = color2 or Color3.fromRGB(245, 247, 244)
+		Message.TextSize = size
 		Message.TextWrapped = true
 		Message.TextXAlignment = Enum.TextXAlignment.Left
 		Message.TextYAlignment = Enum.TextYAlignment.Top
@@ -468,62 +425,7 @@ lib.premain = function(name, title, draggable)
 			TextIcon.Size = UDim2.new(0, 21, 0, 20)
 			TextIcon.Image = "rbxassetid://7072716382"
 		end
-		TabLib.createcustomButton = function(text, color, textsize, callback)
-			local Button = Instance.new("TextButton")			
-			local ButtonUICorner = Instance.new("UICorner")
-			local ButtonIcon = Instance.new("ImageLabel")
-
-			Button.Name = text
-			Button.Parent = TabMain
-			Button.BackgroundColor3 = if color ~= nil then color else Color3.fromRGB(50, 44, 53)
-			Button.BorderSizePixel = 0
-			Button.Size = UDim2.new(0, 382, 0, 29)
-			Button.Font = Enum.Font.Gotham
-			Button.TextColor3 = Color3.fromRGB(255, 255, 255)
-			Button.TextSize = textsize
-			Button.Text = text
-			Button.MouseButton1Down:Connect(callback or function() print("No callback specified") end)
-
-			ButtonUICorner.CornerRadius = UDim.new(0, 5)
-			ButtonUICorner.Parent = Button
-			
-			ButtonIcon.Name = "ButtonIcon"
-			ButtonIcon.Parent = Button
-			ButtonIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-			ButtonIcon.BackgroundTransparency = 1.000
-			ButtonIcon.BorderSizePixel = 0
-			ButtonIcon.Position = UDim2.new(0.927924275, 0, 0.137931034, 0)
-			ButtonIcon.Size = UDim2.new(0, 19, 0, 20)
-			ButtonIcon.Image = "rbxassetid://7072719587"
-		end
-
-		TabLib.createText = function(text)
-			local Text = Instance.new("TextLabel")
-			local TextUICorner = Instance.new("UICorner")
-
-			Text.Name = text
-			Text.Parent = TabMain
-			Text.BackgroundColor3 = Color3.fromRGB(50, 44, 53)
-			Text.BorderSizePixel = 0
-			Text.Size = UDim2.new(0, 382, 0, 29)
-			Text.Font = Enum.Font.Gotham
-			Text.Text = text
-			Text.TextColor3 = Color3.fromRGB(255, 255, 255)
-			Text.TextSize = 14.000
-
-			TextUICorner.CornerRadius = UDim.new(0, 5)
-			TextUICorner.Parent = Text
-			
-			local TextIcon = Instance.new("ImageLabel")
-			TextIcon.Name = "TextIcon"
-			TextIcon.Parent = Text
-			TextIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-			TextIcon.BackgroundTransparency = 1.000
-			TextIcon.BorderSizePixel = 0
-			TextIcon.Position = UDim2.new(0.924277246, 0, 0.137931034, 0)
-			TextIcon.Size = UDim2.new(0, 21, 0, 20)
-			TextIcon.Image = "rbxassetid://7072716382"
-		end
+		
 		TabLib.createSection = function(text, isopen)
 			
 			local SectionLib = {}
@@ -637,34 +539,6 @@ lib.premain = function(name, title, draggable)
 				Text.Text = text
 				Text.TextColor3 = Color3.fromRGB(255, 255, 255)
 				Text.TextSize = 14.000
-
-				TextUICorner.CornerRadius = UDim.new(0, 5)
-				TextUICorner.Parent = Text
-				
-				local TextIcon = Instance.new("ImageLabel")
-				TextIcon.Name = "TextIcon"
-				TextIcon.Parent = Text
-				TextIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-				TextIcon.BackgroundTransparency = 1.000
-				TextIcon.BorderSizePixel = 0
-				TextIcon.Position = UDim2.new(0.924277246, 0, 0.137931034, 0)
-				TextIcon.Size = UDim2.new(0, 21, 0, 20)
-				TextIcon.Image = "rbxassetid://7072716382"
-			end
-
-            SectionLib.createcustomText = function(text, color, textsize)
-				local Text = Instance.new("TextLabel")
-				local TextUICorner = Instance.new("UICorner")
-
-				Text.Name = text
-				Text.Parent = Section
-				Text.BackgroundColor3 = if color ~= nil then color else Color3.fromRGB(50, 44, 53)
-				Text.BorderSizePixel = 0
-				Text.Size = UDim2.new(0, 352, 0, 29)
-				Text.Font = Enum.Font.Gotham
-				Text.Text = text
-				Text.TextColor3 = Color3.fromRGB(255, 255, 255)
-				Text.TextSize = textsize
 
 				TextUICorner.CornerRadius = UDim.new(0, 5)
 				TextUICorner.Parent = Text
@@ -1513,3 +1387,5 @@ lib.premain = function(name, title, draggable)
 
 	return WindowLib
 end
+
+return lib
