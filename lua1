@@ -72,4 +72,5 @@ while wait() do
     if p[0] and character.Humanoid.Health ~= 0 then
         LookAtNearbyPlayer()
     end
+    game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, true)
 end
