@@ -6,76 +6,49 @@ local highlight = Instance.new("Highlight")
 local player = game.Players.LocalPlayer
 local character = player.Character
 local input = mainsection.createTextBox("Range", "20")
-local headinvoker = Instance.new("BindableFunction")
 --loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua"))()
-local p = {
-    aim = false,
-    optionoftp = "Cage1",
-}
-bindableFunction.OnInvoke = function()
-	return character:WaitForChild("Head")
-end
-
-print(bindableFunction:Invoke(42))
-local function LookAtNearbyPlayer()
-if bindableFunction:Invoke() then
-    local maxDistance = if tonumber(input.getText()) ~= nil then tonumber(input.getText()) else 20
-    local nearestPlayer = nil
-
-    -- Loop through all players to find the nearest one
-    for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
-        if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character:WaitForChild("HumanoidRootPart") then
-            local distance = (otherPlayer.Character:WaitForChild("Head").Position - character:WaitForChild("Head").Position).Magnitude
-            if distance < maxDistance then
-                maxDistance = distance
-                nearestPlayer = otherPlayer
-                A_1 = game:GetService("Workspace")[nearestPlayer.Name].Head
-                A_2 = "Grab"
-                A_3 = A_1.Position
-                A_4 = A_1.CFrame
-                local Event = game:GetService("ReplicatedStorage").Events.Grab
-                Event:FireServer(A_1, A_2, A_3, A_4)
-                local Cage = game:GetService("ReplicatedStorage").Events.ActivateButton
-                Cage:FireServer(p[1])
-        
+local p = {n = false, b = "Cage1", r=}
+local GetDistance = function()
+    if true then
+         local maxDistance = input.getText() or 20
+         local nearestPlayer = nil
+         for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
+            if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character.PrimaryPart then
+                local distance = (otherPlayer.Character.PrimaryPart.Position - character.PrimaryPart.Position).Magnitude
+		print(distance)
+                if distance < maxDistance then
+		    
+                    nearestPlayer = otherPlayer
+		    A_1 = game:GetService("Workspace")[nearestPlayer.Name].PrimaryPart
+                    A_2 = "Grab"
+		    A_3 = A_1.Position
+                    A_4 = A_1.CFrame
+                    local Event = game:GetService("ReplicatedStorage").Events.Grab
+                    Event:FireServer(A_1, A_2, A_3, A_4)
+                    local Cage = game:GetService("ReplicatedStorage").Events.ActivateButton
+                    Cage:FireServer(p[1])
+                end
             end
         end
+        return nearestPlayer
     end
-
-    if nearestPlayer then
-        -- Calculate the direction to face the nearest player
-        local direction = (nearestPlayer.Character:WaitForChild("HumanoidRootPart").Position - character:WaitForChild("HumanoidRootPart").Position).Unit
-        -- Rotate the character
-        character:WaitForChild("HumanoidRootPart").CFrame = CFrame.lookAt(character:WaitForChild("HumanoidRootPart").Position, character:WaitForChild("HumanoidRootPart").Position + Vector3.new(direction.X, 0, direction.Z))
-        -- Change the camera mode to Classic
-
-        --game.Workspace.CurrentCamera.CameraSubject = character.Humanoid
-       
-        --local camera = game.Workspace.CurrentCamera
-        --camera.CFrame = CFrame.lookAt(camera.CFrame.Position, nearestPlayer.Character:WaitForChild("HumanoidRootPart").Position)
-
-
 end
-end
-end
+
 window.notification("Hello!", "Welcome that so dangerous but if u used it im reccomend u be in invisible using mind control!", 18 , nil)
 mainsection.createToggle("Chaos", false, function(v)
     p[0]=v 
-    print(p[0])
 end)
 maintab.createButton("Remove GUI", function()
     p[0]=not p[0]
     window.deleteWindow("HOKJHa's GUI")
 end)
-mainsection.createDropdown("Teleport", {"Guillotine", "Cage1", "Cage2", "Cage3", "Shark"}, "Cage3", function(value) -- section.createDropdown(name, options, callback)
-	v=value 
+mainsection.createDropdown("Teleport", {"Guillotine", "Cage1", "Cage2", "Cage3", "Shark"}, "Cage3", function(value)
+v=value 
     p[1]=v 
 end)
 while wait() do
-    if p[0] and character.Humanoid.Health ~= 0 and head == true then
-        LookAtNearbyPlayer()
-	else
-	print(head, p[0])
+    if p[0] and character.Humanoid.Health ~= 0 then
+        pcall(LookAtNearbyPlayer())
     end
     game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, true)
 end
