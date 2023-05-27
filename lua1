@@ -1,0 +1,105 @@
+local lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/TheoTheEpic/AquaLib/main/AquaLib.lua'))()
+local window = lib.createWindow("HOKJHa's GUI", "HOKJHa's GUI", true) 
+local maintab = window.createTab("Main")
+local teleports = maintab.createSection("Helper", false)
+local FarmValue = false
+local Highlight = false
+local Name =  game.Players.LocalPlayer.Name
+local Win = false
+local highlight = Instance.new("Highlight")
+local rS = game:GetService("RunService")
+local Playrs = maintab.createSection("Player to look", false)
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local e = false
+local plrtotp = nil
+
+local Toggle = function()
+    local maxDistance = math.huge
+    local nearestPlayer = nil
+
+    -- Loop through all players to find the nearest one
+if e then
+if plrtotp ~= nil and game.Players:FindFirstChild(plrtotp) then
+nearestPlayer = game.Players[plrtotp]
+else
+
+for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
+        if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local distance = (otherPlayer.Character.HumanoidRootPart.Position - character.HumanoidRootPart.Position).Magnitude
+            if distance < maxDistance then
+                maxDistance = distance
+                nearestPlayer = otherPlayer
+            end
+        end
+    end
+
+end
+else
+for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
+        if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local distance = (otherPlayer.Character.HumanoidRootPart.Position - character.HumanoidRootPart.Position).Magnitude
+            if distance < maxDistance then
+                maxDistance = distance
+                nearestPlayer = otherPlayer
+            end
+        end
+    end
+
+end 
+    if nearestPlayer then
+        -- Calculate the direction to face the nearest player
+        local direction = (nearestPlayer.Character.HumanoidRootPart.Position - character.HumanoidRootPart.Position).Unit
+        local studs = math.round((nearestPlayer.Character.HumanoidRootPart.Position - character.HumanoidRootPart.Position).Magnitude)
+        
+        -- Rotate the character
+        character.HumanoidRootPart.CFrame = CFrame.lookAt(character.HumanoidRootPart.Position, character.HumanoidRootPart.Position + Vector3.new(direction.X, 0, direction.Z))
+        -- Create a line from the character to the nearest player
+        local camera = game.Workspace.CurrentCamera
+        camera.CFrame = CFrame.lookAt(camera.CFrame.Position, nearestPlayer.Character.HumanoidRootPart.Position)
+
+        if not nearestPlayer.Character.Torso:FindFirstChild("Studs_default") then
+            Board(nearestPlayer.Character.Torso)
+        end
+    end
+end
+teleports.createToggle("Look at near player", false, function(value)
+	FarmValue = value
+end)
+teleports.createToggle("Highlight all players", false, function(value)
+	Highlight = value
+end)
+Playrs.createToggle("Enabled?", false, function(value)
+	e = value
+end)
+local textbox = Playrs.createTextBox("Player", player.Name)
+maintab.createButton("Remove GUI", function()
+    FarmValue = false
+    Highlight = false
+    e = false
+    plrtotp = nil
+    window.deleteWindow("HOKJHa's GUI")
+end)
+
+rS.RenderStepped:Connect(function()
+print(plrtotp)
+plrtotp = textbox.getText()
+    if FarmValue then
+        pcall(Toggle)
+    end
+    if Highlight then
+    for _, v in pairs(game.Players:GetPlayers()) do
+        if not v.Character:FindFirstChild("Highlight") then
+            highlight.FillTransparency = 1
+            highlight:Clone().Parent = v.Character
+    end
+    end
+    else
+    for _, v in pairs(game.Players:GetPlayers()) do
+        if v.Character:FindFirstChild("Highlight") then
+v.Character:FindFirstChild("Highlight"):Destroy()
+    end
+    end
+    end
+end)
