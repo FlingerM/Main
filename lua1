@@ -2,7 +2,7 @@ local lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/FlingerM/
 local window = lib.createWindow("HOKJHa's GUI", "HOKJHa's GUI", true) 
 local maintab = window.createTab("Main")
 local mainsection = maintab.createSection("Helper", false)
-local targetsection = maintab.createSection("Targeter", false)
+--local targetsection = maintab.createSection("Targeter", false)
 local highlight = Instance.new("Highlight")
 local player = game.Players.LocalPlayer
 local character = player.Character
@@ -17,7 +17,7 @@ local GetDistance = function()
     local maxDistance = if tonumber(input.getText) == nil then 100 else tonumber(input.getText())
     local nearestPlayer = nil
         for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
-        if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character.PrimaryPart and stopped == false and otherPlayer.Name == selected then
+        if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character.PrimaryPart and stopped == false then
             local distance = (otherPlayer.Character.PrimaryPart.Position - character.PrimaryPart.Position).Magnitude
             if distance < maxDistance then
                 maxDistance = distance
@@ -29,6 +29,11 @@ local GetDistance = function()
                 local Event = game:GetService("ReplicatedStorage").Events.Grab
                 Event:FireServer(A_1, A_2, A_3, A_4)
                 local Cage = game:GetService("ReplicatedStorage").Events.ActivateButton
+		if selected ~= "None" then
+		   if selected == "Mod1" then
+		    Cage:FireServer("Guillotine")
+		   end
+		end
                 Cage:FireServer(p[1])
 	     end
          end
@@ -68,16 +73,23 @@ targetsection.createDropdown("Target", players, "None", function(value)
 end)]]
 window.notification("Hello!", "Welcome, that script so dangerous but if u used it im reccomend u be in invisible using mind control!", 18 , nil)
 mainsection.createToggle("Chaos", false, function(v)
-window.notification("Hello!", "My reccomendations: Use mind contol to target player, after player leave you be in invisible and you can grab players without title and nickname near you!", 16 , nil)
     p[0]=v 
 end)
+window.notification("Hello!", "My reccomendations: Use mind contol to target player, after player leave you be in invisible and you can grab players without title and nickname near you!", 16 , nil)
 maintab.createButton("Remove GUI", function()
     p[0]=not p[0]
     stopped = true
     warn("Script stopped - By HOKJHa!")
     window.deleteWindow("HOKJHa's GUI")
 end)
-mainsection.createDropdown("Teleport", {"Guillotine", "Cage1", "Cage2", "Cage3", "Cage4", "Machine", "Shark"}, "Cage3", function(value)
+mainsection.createDropdown("Mods", {"Mod1", "None"}, "None", function(value)
+v=value 
+    selected = v
+    if v=="Mod1" then
+        window.notification("FAQ", "This mod prohibits taking you and other people to the person on whom you used it", 18 , nil)
+    end
+end)
+mainsection.createDropdown("Teleport", {"Cage1", "Cage2", "Cage3", "Cage4", "Machine", "Shark"}, "Cage3", function(value)
 v=value 
     p[1]=v 
 end)
