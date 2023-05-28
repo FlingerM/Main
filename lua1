@@ -31,7 +31,10 @@ if selected ~= "None" then
                 Event:FireServer(A_1, A_2, A_3, A_4)
                 local Cage = game:GetService("ReplicatedStorage").Events.ActivateButton
                 Cage:FireServer(p[1])
-                else
+	     end
+	end
+end
+               else
                 local maxDistance = if tonumber(input.getText) == nil then 100 else tonumber(input.getText())
     local nearestPlayer = nil
         for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
