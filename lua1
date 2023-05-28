@@ -37,6 +37,7 @@ end
 window.notification("Hello!", "Welcome that so dangerous but if u used it im reccomend u be in invisible using mind control!", 18 , nil)
 mainsection.createToggle("Chaos", false, function(v)
     p[0]=v 
+    window.notification("Warning!", "Script doesn't works after die anyway! If you died you must reload script!", 16)
 end)
 maintab.createButton("Remove GUI", function()
     p[0]=not p[0]
