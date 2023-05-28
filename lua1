@@ -14,7 +14,25 @@ local selected = nil
 local p = {n = false, b = "Cage1", m="Grab"}
 
 local GetDistance = function()
-     local maxDistance = if tonumber(input.getText) == nil then 100 else tonumber(input.getText())
+if selected ~= "None" then
+    local maxDistance = if tonumber(input.getText) == nil then 100 else tonumber(input.getText())
+    local nearestPlayer = nil
+        for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
+        if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character.PrimaryPart and stopped == false and otherPlayer.Name == selected then
+            local distance = (otherPlayer.Character.PrimaryPart.Position - character.PrimaryPart.Position).Magnitude
+            if distance < maxDistance then
+                maxDistance = distance
+                nearestPlayer = otherPlayer
+                A_1 = nearestPlayer.Character:FindFirstChildOfClass("Part")
+                A_2 = p[2] or "Grab"
+		        A_3 = A_1.Position
+                A_4 = A_1.CFrame
+                local Event = game:GetService("ReplicatedStorage").Events.Grab
+                Event:FireServer(A_1, A_2, A_3, A_4)
+                local Cage = game:GetService("ReplicatedStorage").Events.ActivateButton
+                Cage:FireServer(p[1])
+                else
+                local maxDistance = if tonumber(input.getText) == nil then 100 else tonumber(input.getText())
     local nearestPlayer = nil
         for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
         if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character.PrimaryPart and stopped == false then
@@ -30,6 +48,8 @@ local GetDistance = function()
                 Event:FireServer(A_1, A_2, A_3, A_4)
                 local Cage = game:GetService("ReplicatedStorage").Events.ActivateButton
                 Cage:FireServer(p[1])
+end
+
                 if nearestPlayer then
         -- Calculate the direction to face the nearest player
         --local direction = (nearestPlayer.Character.HumanoidRootPart.Position - character.HumanoidRootPart.Position).Unit
