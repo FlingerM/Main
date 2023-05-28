@@ -14,7 +14,6 @@ local selected = nil
 local p = {n = false, b = "Cage1", m="Grab"}
 
 local GetDistance = function()
-if selected ~= "None" then
     local maxDistance = if tonumber(input.getText) == nil then 100 else tonumber(input.getText())
     local nearestPlayer = nil
         for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
@@ -32,26 +31,8 @@ if selected ~= "None" then
                 local Cage = game:GetService("ReplicatedStorage").Events.ActivateButton
                 Cage:FireServer(p[1])
 	     end
-	end
-end
-               else
-                local maxDistance = if tonumber(input.getText) == nil then 100 else tonumber(input.getText())
-    local nearestPlayer = nil
-        for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
-        if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character.PrimaryPart and stopped == false then
-            local distance = (otherPlayer.Character.PrimaryPart.Position - character.PrimaryPart.Position).Magnitude
-            if distance < maxDistance then
-                maxDistance = distance
-                nearestPlayer = otherPlayer
-                A_1 = nearestPlayer.Character:FindFirstChildOfClass("Part")
-                A_2 = p[2] or "Grab"
-		        A_3 = A_1.Position
-                A_4 = A_1.CFrame
-                local Event = game:GetService("ReplicatedStorage").Events.Grab
-                Event:FireServer(A_1, A_2, A_3, A_4)
-                local Cage = game:GetService("ReplicatedStorage").Events.ActivateButton
-                Cage:FireServer(p[1])
-end
+         end
+	 end
 
                 if nearestPlayer then
         -- Calculate the direction to face the nearest player
@@ -71,11 +52,8 @@ end
         line.Parent = workspace
         game.Debris:AddItem(line, 0.002)
             end
-            end
-        end
-    end
 end
-for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
+--[[for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
     if otherPlayer ~= player and otherPlayer.Character then
         players[_]=otherPlayer.Name
     end
@@ -87,7 +65,7 @@ end
 players[lengthNum+1]="None"
 targetsection.createDropdown("Target", players, "None", function(value)
     selected = value
-end)
+end)]]
 window.notification("Hello!", "Welcome, that script so dangerous but if u used it im reccomend u be in invisible using mind control!", 18 , nil)
 mainsection.createToggle("Chaos", false, function(v)
 window.notification("Hello!", "My reccomendations: Use mind contol to target player, after player leave you be in invisible and you can grab players without title and nickname near you!", 16 , nil)
@@ -99,7 +77,7 @@ maintab.createButton("Remove GUI", function()
     warn("Script stopped - By HOKJHa!")
     window.deleteWindow("HOKJHa's GUI")
 end)
-mainsection.createDropdown("Teleport", {"Guillotine", "Cage1", "Cage2", "Cage3", "Shark"}, "Cage3", function(value)
+mainsection.createDropdown("Teleport", {"Guillotine", "Cage1", "Cage2", "Cage3", "Cage4", "Machine", "Shark"}, "Cage3", function(value)
 v=value 
     p[1]=v 
 end)
