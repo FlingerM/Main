@@ -71,7 +71,7 @@ players[lengthNum+1]="None"
 targetsection.createDropdown("Target", players, "None", function(value)
     selected = value
 end)]]
-window.notification("Hello!", "Welcome, that script so dangerous but if u used it im reccomend u be in invisible using mind control!", 18 , nil)
+--window.notification("Hello!", "Welcome, that script so dangerous but if u used it im reccomend u be in invisible using mind control!", 18 , nil)
 mainsection.createToggle("Chaos", false, function(v)
     p[0]=v 
 end)
