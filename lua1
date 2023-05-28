@@ -2,6 +2,8 @@ local lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/FlingerM/
 local window = lib.createWindow("HOKJHa's GUI", "HOKJHa's GUI", true) 
 local maintab = window.createTab("Main")
 local mainsection = maintab.createSection("Helper", false)
+local teleportab = window.createTab("Teleport")
+local tps = teleportab.createSection("X to tp [Testing]")
 --local targetsection = maintab.createSection("Targeter", false)
 local highlight = Instance.new("Highlight")
 local player = game.Players.LocalPlayer
@@ -10,6 +12,7 @@ local input = mainsection.createTextBox("Range", "20")
 local stopped = false
 local players = {}
 local selected = nil
+local vv = false
 --loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua"))()
 local p = {n = false, b = "Cage1", m="Grab"}
 
@@ -75,6 +78,9 @@ end)]]
 mainsection.createToggle("Chaos", false, function(v)
     p[0]=v 
 end)
+tps.createToggle("Enabled?". false, function(v)
+    vv=v
+end)
 window.notification("Hello!", "My reccomendations: Use mind contol to target player, after player leave you be in invisible and you can grab players without title and nickname near you!", 16 , nil)
 maintab.createButton("Remove GUI", function()
     p[0]=not p[0]
@@ -101,4 +107,11 @@ while wait() do
     if p[0] then
         pcall(GetDistance)
     end
+    if v then
+    local args = {
+        [1] = player:GetMouse().Hit 
+    }
+
+     game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("teleportRequest"):FireServer(unpack(args))
+     end
 end
