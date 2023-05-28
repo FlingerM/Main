@@ -2,54 +2,90 @@ local lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/FlingerM/
 local window = lib.createWindow("HOKJHa's GUI", "HOKJHa's GUI", true) 
 local maintab = window.createTab("Main")
 local mainsection = maintab.createSection("Helper", false)
+local targetsection = maintab.createSection("Targeter", false)
 local highlight = Instance.new("Highlight")
 local player = game.Players.LocalPlayer
 local character = player.Character
 local input = mainsection.createTextBox("Range", "20")
+local stopped = false
+local players = {}
+local selected = nil
 --loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua"))()
-local p = {n = false, b = "Cage1", r=}
+local p = {n = false, b = "Cage1", m="Grab"}
+
 local GetDistance = function()
-    if true then
-         local maxDistance = input.getText() or 20
-         local nearestPlayer = nil
-         for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
-            if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character.PrimaryPart then
-                local distance = (otherPlayer.Character.PrimaryPart.Position - character.PrimaryPart.Position).Magnitude
-		print(distance)
-                if distance < maxDistance then
-		    
-                    nearestPlayer = otherPlayer
-		    A_1 = game:GetService("Workspace")[nearestPlayer.Name].PrimaryPart
-                    A_2 = "Grab"
-		    A_3 = A_1.Position
-                    A_4 = A_1.CFrame
-                    local Event = game:GetService("ReplicatedStorage").Events.Grab
-                    Event:FireServer(A_1, A_2, A_3, A_4)
-                    local Cage = game:GetService("ReplicatedStorage").Events.ActivateButton
-                    Cage:FireServer(p[1])
-                end
+     local maxDistance = if tonumber(input.getText) == nil then 100 else tonumber(input.getText())
+    local nearestPlayer = nil
+        for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
+        if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character.PrimaryPart and stopped == false then
+            local distance = (otherPlayer.Character.PrimaryPart.Position - character.PrimaryPart.Position).Magnitude
+            if distance < maxDistance then
+                maxDistance = distance
+                nearestPlayer = otherPlayer
+                A_1 = nearestPlayer.Character:FindFirstChildOfClass("Part")
+                A_2 = p[2] or "Grab"
+		        A_3 = A_1.Position
+                A_4 = A_1.CFrame
+                local Event = game:GetService("ReplicatedStorage").Events.Grab
+                Event:FireServer(A_1, A_2, A_3, A_4)
+                local Cage = game:GetService("ReplicatedStorage").Events.ActivateButton
+                Cage:FireServer(p[1])
+                if nearestPlayer then
+        -- Calculate the direction to face the nearest player
+        --local direction = (nearestPlayer.Character.HumanoidRootPart.Position - character.HumanoidRootPart.Position).Unit
+        --local studs = math.round((nearestPlayer.Character.HumanoidRootPart.Position - character.HumanoidRootPart.Position).Magnitude)
+        
+        -- Rotate the character
+        --character.HumanoidRootPart.CFrame = -CFrame.lookAt(character.HumanoidRootPart.Position, character.HumanoidRootPart.Position + Vector3.new(direction.X, 0, direction.Z))
+        -- Create a line from the character to the nearest player
+        local line = Instance.new("Part")
+        line.Anchored = true
+        line.CanCollide = false
+        line.BrickColor = BrickColor.new("White")
+        line.Material = "Neon"
+        line.Size = Vector3.new(0.02, 0.02, (character.HumanoidRootPart.Position - nearestPlayer.Character.HumanoidRootPart.Position).Magnitude)
+        line.CFrame = CFrame.new(character.HumanoidRootPart.Position, nearestPlayer.Character.HumanoidRootPart.Position) * CFrame.new(0, 0, -line.Size.Z/2)
+        line.Parent = workspace
+        game.Debris:AddItem(line, 0.002)
+            end
             end
         end
-        return nearestPlayer
     end
 end
-
-window.notification("Hello!", "Welcome that so dangerous but if u used it im reccomend u be in invisible using mind control!", 18 , nil)
+for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
+    if otherPlayer ~= player and otherPlayer.Character then
+        players[_]=otherPlayer.Name
+    end
+end
+local lengthNum = 0
+for k, v in pairs(players) do 
+   lengthNum = lengthNum + 1
+end
+players[lengthNum+1]="None"
+targetsection.createDropdown("Target", players, "None", function(value)
+    selected = value
+end)
+window.notification("Hello!", "Welcome, that script so dangerous but if u used it im reccomend u be in invisible using mind control!", 18 , nil)
 mainsection.createToggle("Chaos", false, function(v)
+window.notification("Hello!", "My reccomendations: Use mind contol to target player, after player leave you be in invisible and you can grab players without title and nickname near you!", 16 , nil)
     p[0]=v 
-    window.notification("Warning!", "Script doesn't works after die anyway! If you died you must reload script!", 16)
 end)
 maintab.createButton("Remove GUI", function()
     p[0]=not p[0]
+    stopped = true
+    warn("Script stopped - By HOKJHa!")
     window.deleteWindow("HOKJHa's GUI")
 end)
 mainsection.createDropdown("Teleport", {"Guillotine", "Cage1", "Cage2", "Cage3", "Shark"}, "Cage3", function(value)
 v=value 
     p[1]=v 
 end)
+mainsection.createDropdown("Method", {"Grab", "Grenade Launcher", "Taser", "Mind Control", "Drag"}, "Grab", function(value)
+v=value 
+    p[2]=v 
+end)
 while wait() do
-    if p[0] and character.Humanoid.Health ~= 0 then
-        pcall(LookAtNearbyPlayer())
+    if p[0] then
+        pcall(GetDistance)
     end
-    game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, true)
 end
