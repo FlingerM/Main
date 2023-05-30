@@ -1,1 +1,47 @@
 
+local lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/FlingerM/Main/main/library.lua'))()
+local UserInputService = game:GetService("UserInputService")
+local window = lib.createWindow("HOKJHa's GUI", "HOKJHa's GUI", true) 
+local maintab = window.createTab("Main")
+local mainsection = maintab.createSection("Helper", false)
+--local targetsection = maintab.createSection("Targeter", false)
+local highlight = Instance.new("Highlight")
+local player = game.Players.LocalPlayer
+local character = player.Character
+local stopped = false
+local w = false
+
+local GetDistance = function()
+    local maxDistance = math.huge
+    local nearestPlayer = nil
+        for _, otherPlayer in ipairs(game.Players:GetPlayers()) do
+        if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character.PrimaryPart and stopped == false then
+            local distance = (otherPlayer.Character.PrimaryPart.Position - character.PrimaryPart.Position).Magnitude
+            if distance < maxDistance then
+                maxDistance = distance
+                nearestPlayer = otherPlayer
+                local args = {
+                    [1] = Ray.new({character.Head.Position}, {nearestPlayer.Head.Position})
+                }
+                print(unpack(args))                  
+                game:GetService("Players").LocalPlayer.Character.Shotgun.RemoteBridge:FireServer(unpack(args))
+
+	     end
+         end
+	 end
+
+end
+mainsection.createToggle("Enabled?", false, function(v)
+    w=v
+end)
+maintab.createButton("Remove GUI", function()
+    w=not w
+    stopped = true
+    warn("Script stopped - By HOKJHa!")
+    window.deleteWindow("HOKJHa's GUI")
+end)
+while wait() do
+    if w then
+        pcall(GetDistance)
+    end
+end
