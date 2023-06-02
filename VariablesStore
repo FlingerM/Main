@@ -32,3 +32,4 @@ else
 warn("Name, TableName or value not assigned")
 end
 end
+return Variables
