@@ -6,26 +6,29 @@ local Variables = {
         CurrentTime = 0,
     },
 }
-local function Variables.add(Name, Value)
+Variables.add = function(Name, Value)
 if Name and Value then
 Variables[Name]=Value
 else
 warn("Name or value not assigned")
 end
 end
-local function Variables.get(Name)
+Variables.get = function(Name)
 return Variables[Name]
 end
-local function Variables.set(Name, Value)
+Variables.set = function(Name, Value)
 Variables[Name]=Value
 end
-local function Variables.getintable(Name, TableName)
+Variables.getintable = function(Name, TableName)
 return Variables[TableName][Name]
 end
-local function Variables.setintable(Name, TableName, Value)
-Variables[TableName][Name]=Value
+Variables.setintable = function(Name, TableName, Value)
+local startPos, endPos = string.find(TableName, "Core")
+if not startPos then
+    Variables[TableName][Name]=Value else warn("Name of table: "..string.sub(TableName, startPos, endPos).." Have name of CoreTables")
 end
-local function Variables.addtotable(Name, TableName, Value)
+end
+Variables.addtotable = function(Name, TableName, Value)
 if Name and Value and TableName then
 Variables[TableName][Name]=Value
 else
