@@ -1,11 +1,4 @@
 local Variables = {
-    NoCooldown = false,
-
-
-
-
-
-    --[Core]--
     Core = {
         Progress_Down = false,
         PcallDebug = false,
@@ -13,3 +6,29 @@ local Variables = {
         CurrentTime = 0,
     },
 }
+local function Variables.add(Name, Value)
+if Name and Value then
+Variables[Name]=Value
+else
+warn("Name or value not assigned")
+end
+end
+local function Variables.get(Name)
+return Variables[Name]
+end
+local function Variables.set(Name, Value)
+Variables[Name]=Value
+end
+local function Variables.getintable(Name, TableName)
+return Variables[TableName][Name]
+end
+local function Variables.setintable(Name, TableName, Value)
+Variables[TableName][Name]=Value
+end
+local function Variables.addtotable(Name, TableName, Value)
+if Name and Value and TableName then
+Variables[TableName][Name]=Value
+else
+warn("Name, TableName or value not assigned")
+end
+end
