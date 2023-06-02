@@ -1,0 +1,15 @@
+local Variables = {
+    NoCooldown = false,
+
+
+
+
+
+    --[Core]--
+    Core = {
+        Progress_Down = false,
+        PcallDebug = false,
+        MethodDebug = "While", --or "One-Time"
+        CurrentTime = 0,
+    },
+}
